@@ -25,7 +25,7 @@ class InstallView(View):
             'client_endpoint': f'https://{request.GET.get("DOMAIN", "")}/rest/',
         }
 
-        logging.info('Install: ', data)
+        logging.info(data)
 
         # tokens.save_secrets(data)
         return render(request, self.TEMPLATE_NAME)
@@ -60,10 +60,13 @@ class IndexView(View):
                     break
 
             data = json.loads(placement_option)
-            context["id"] = data.get("ID")
+            context["entity_id"] = data.get("ID")
+
+            logging.info(data)
 
         except Exception as err:
             logging.error(f"Error: {err}")
             context["error"] = str(err)
 
+        logging.info(context)
         return render(request, self.TEMPLATE_NAME, context=context)
