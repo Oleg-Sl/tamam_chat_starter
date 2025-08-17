@@ -26,6 +26,7 @@ class InstallView(View):
         }
 
         logging.info('Install: ', data)
+
         # tokens.save_secrets(data)
         return render(request, self.TEMPLATE_NAME)
 
