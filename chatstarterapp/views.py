@@ -25,6 +25,7 @@ class InstallView(View):
             'client_endpoint': f'https://{request.query_params.get("DOMAIN", "")}/rest/',
         }
 
+        logging.info('Install: ', data)
         # tokens.save_secrets(data)
         return render(request, self.TEMPLATE_NAME)
 
