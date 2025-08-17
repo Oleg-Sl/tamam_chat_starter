@@ -18,11 +18,11 @@ class InstallView(View):
     def post(self, request):
         data = {
             "domain": request.GET.get("DOMAIN", ""),
-            "auth_token": request.data.get("AUTH_ID", ""),
-            "expires_in": request.data.get("AUTH_EXPIRES", 3600),
-            "refresh_token": request.data.get("REFRESH_ID", ""),
-            "application_token": request.query_params.get("APP_SID", ""),
-            'client_endpoint': f'https://{request.query_params.get("DOMAIN", "")}/rest/',
+            "auth_token": request.POST.get("AUTH_ID", ""),
+            "expires_in": request.POST.get("AUTH_EXPIRES", 3600),
+            "refresh_token": request.POST.get("REFRESH_ID", ""),
+            "application_token": request.GET.get("APP_SID", ""),
+            'client_endpoint': f'https://{request.GET.get("DOMAIN", "")}/rest/',
         }
 
         logging.info('Install: ', data)
@@ -47,8 +47,8 @@ class IndexView(View):
         }
 
         try:
-            placement = request.data.get("PLACEMENT", "")
-            placement_option = request.data.get("PLACEMENT_OPTIONS", "")
+            placement = request.POST.get("PLACEMENT", "")
+            placement_option = request.POST.get("PLACEMENT_OPTIONS", "")
             logging.info({
                 "placement": placement,
                 "placement_option": placement_option
