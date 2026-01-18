@@ -78,7 +78,7 @@ async function handleChatFromDeal(dealId) {
     console.log('fields: ', fields?.UF_CRM_689C03C9DF905?.items);
     console.log('fields: ', fields?.UF_CRM_69412104934C4?.items);
     console.log('deal: ', deal);
-    // renderReceiver(fields?.UF_CRM_689C03C9DF905?.items);
+
     renderSelectField('receiver', fields?.UF_CRM_689C03C9DF905?.items);
     renderSelectField('messenger', fields?.UF_CRM_69412104934C4?.items);
 
