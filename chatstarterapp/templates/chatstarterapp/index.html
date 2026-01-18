@@ -34,19 +34,35 @@
     <body>
         <div class="container text-center" style="width: 50%; margin-top: 5rem !important;">
             <div class="row">
-                <div class="input-group mb-3">
+                <!-- <div class="input-group mb-3">
                     <label class="input-group-text fixed-width" for="receiver">С кем создать чат</label>
                     <select id="receiver" class="form-select" aria-label="С кем создать чат">
                         <option value="1">Один</option>
                         <option value="2">Два</option>
                     </select>
+                </div> -->
+                <div class="mb-3">
+                    <label for="receiver" class="form-label fixed-width">С кем создать чат</label>
+                    <select id="receiver" class="form-select" aria-label="С кем создать чат"></select>
                 </div>
             </div>
 
             <div class="row">
-                <div class="input-group mb-3">
+                <div class="mb-3">
+                    <label for="messenger" class="form-label fixed-width">Месседжер для общения</label>
+                    <select id="messenger" class="form-select" aria-label="Месседжер для общения"></select>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- <div class="input-group mb-3">
                   <span class="input-group-text fixed-width" id="message-label">Сообщение</span>
                   <textarea class="form-control" id="message" aria-label="Сообщение" aria-describedby="message-label" rows="3"></textarea>
+                </div> -->
+                <div class="input-group mb-3">
+                    <label for="receiver" class="form-label fixed-width">Сообщение</label>
+                    <!-- <span class="input-group-text fixed-width" id="message-label">Сообщение</span> -->
+                    <textarea class="form-control" id="message" aria-label="Сообщение" aria-describedby="message-label" rows="3"></textarea>
                 </div>
             </div>
 
