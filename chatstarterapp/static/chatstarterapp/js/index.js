@@ -42,6 +42,7 @@ function renderSelectField(elementId, fields) {
         contentHTML += `<option value="${field.ID}">${field.VALUE}</option>`;
     }
     const selectElem = document.getElementById(elementId);
+    console.log('selectElem = ', selectElem);
     if (selectElem) {
         selectElem.innerHTML = contentHTML;
     }
@@ -75,9 +76,10 @@ async function handleChatFromDeal(dealId) {
 
     console.log('user: ', user);
     console.log('fields: ', fields?.UF_CRM_689C03C9DF905?.items);
+    console.log('fields: ', fields?.UF_CRM_69412104934C4?.items);
     console.log('deal: ', deal);
     // renderReceiver(fields?.UF_CRM_689C03C9DF905?.items);
-    renderSelectField('receiver', fields?.UF_CRM_69412104934C4?.items);
+    renderSelectField('receiver', fields?.UF_CRM_689C03C9DF905?.items);
     renderSelectField('messenger', fields?.UF_CRM_69412104934C4?.items);
 
     document.getElementById('createChatWA').addEventListener('click', async (event) => {
