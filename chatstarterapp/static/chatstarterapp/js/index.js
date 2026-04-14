@@ -341,8 +341,6 @@ async function handleChatFromSmart(entityTypeId, entityId) {
 
         BX24.closeApplication();
     })
-
-
 }
 
 
