@@ -1,3 +1,4 @@
+import re
 import json
 import logging
 
@@ -30,7 +31,9 @@ class InstallView(View):
         # tokens.save_secrets(data)
         return render(request, self.TEMPLATE_NAME)
 
-
+# 2026-04-14 17:05:12,948 - root - INFO - {'placement': 'CRM_DYNAMIC_131_DETAIL_ACTIVITY', 'placement_option': '{"ID":"1701"}'}
+# 2026-04-14 17:05:12,948 - root - INFO - {'ID': '1701'}
+# 2026-04-14 17:05:12,948 - root - INFO - {'entity_type': '', 'entity_id': '1701'}
 class IndexView(View):
     TEMPLATE_NAME = 'chatstarterapp/index.html'
     PLACEMENT_PREFIX_MAPPING = {
@@ -58,6 +61,10 @@ class IndexView(View):
                 if placement.startswith(prefix):
                     context["entity_type"] = entity_type
                     break
+
+            if placement.startswith("CRM_DYNAMIC_"):
+                context["entity_type"] = "smart"
+                context["entity_type_id"] = re.sub(r'CRM_DYNAMIC_(\d+)_.*', r'\1', placement)
 
             data = json.loads(placement_option)
             context["entity_id"] = data.get("ID")

@@ -289,37 +289,61 @@ async function handleChatFromContact(contactId) {
 }
 
 
-// async function handleChatFromContact(contactId) {
-//     const selectElem = document.getElementById('receiver');
-//     selectElem.parentElement.remove();
+async function handleChatFromSmart(entityTypeId, entityId) {
+    let cmd = {
+        user: ['user.current', {}],
+        fields: [`crm.deal.fields`, {}]
+    };
 
-//     // UF_CRM_1755055586388 - Менеджер создавший чат
-//     let cmd = {
-//         user: ['user.current', {}],
-//         contact_update: [
-//             'crm.contact.update',
-//             {
-//                 id: contactId,
-//                 fields: {
-//                     UF_CRM_1755055586388: '$result[user][LAST_NAME] $result[user][NAME]',
-//                 }
-//             }
-//         ],
-//         rub_bizproc: [
-//             'bizproc.workflow.start',
-//             {
-//                 TEMPLATE_ID: 2143,
-//                 DOCUMENT_ID: [
-//                     'crm',
-//                     'CCrmDocumentContact',
-//                     `CONTACT_${contactId}`,
-//                 ]
-//             }
-//         ]
-//     };
-//     const result = callBatchPromise(cmd);
-//     BX24.closeApplication();
-// }
+    const result = await callBatchPromise(cmd);
+
+    const user = result.user.data();
+    const fields = result.fields.data();
+
+    console.log('user: ', user);
+    console.log('fields: ', fields?.UF_CRM_689C03C9DF905?.items);
+    console.log('fields: ', fields?.UF_CRM_69412104934C4?.items);
+
+    renderSelectField('receiver', fields?.UF_CRM_689C03C9DF905?.items);
+    renderSelectField('messenger', fields?.UF_CRM_69412104934C4?.items);
+
+    document.getElementById('createChatWA').addEventListener('click', async (event) => {
+        const button = event.target;
+        button.setAttribute('disabled', '');
+        button.querySelector('span').classList.remove('d-none');
+
+        const manager = `${user?.LAST_NAME} ${user?.NAME}`;
+        const receiverId = document.getElementById('receiver').value;
+        const messengerId = document.getElementById('messenger').value;
+        const message = document.getElementById('message').value;
+        console.log('manager: ', manager);
+        console.log('receiverId: ', receiverId);
+        console.log('messengerId: ', messengerId);
+        console.log('message: ', message);
+        const resultStartBizproc = await callMethodPromise(
+            'bizproc.workflow.start',
+            {
+                TEMPLATE_ID: 2367,
+                DOCUMENT_ID: [
+                    'crm',
+                    'Bitrix\\Crm\\Integration\\BizProc\\Document\\Dynamic',
+                    `DYNAMIC_${entityTypeId}_${entityId}`
+                ],
+                PARAMETERS: {
+                    'Parameter1': message,
+                    'Parameter2': messengerId,
+                    'Parameter3': receiverId,
+                },
+            }
+        );
+
+        console.log('resultStartBizproc = ', resultStartBizproc);
+
+        BX24.closeApplication();
+    })
+
+
+}
 
 
 BX24.init(async function(){
@@ -330,5 +354,7 @@ BX24.init(async function(){
         await handleChatFromLead(entityId);
     } else if (entityType === 'contact') {
         await handleChatFromContact(entityId);
+    } else if (entityType === 'smart') {    
+        await handleChatFromSmart(entityTypeId, entityId);
     }
 });
