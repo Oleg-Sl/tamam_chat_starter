@@ -348,13 +348,16 @@ async function handleChatFromSmart(entityTypeId, entityId) {
 
 BX24.init(async function(){
     console.log('Application was loader');
+    console.log('Entity type = ', entityType)
     if (entityType === 'deal') {
         await handleChatFromDeal(entityId);
     } else if (entityType === 'lead') {
         await handleChatFromLead(entityId);
     } else if (entityType === 'contact') {
         await handleChatFromContact(entityId);
-    } else if (entityType === 'smart') {    
+    } else if (entityType === 'smart') {
+        console.log('Entity type1 = ', entityType)
+
         await handleChatFromSmart(entityTypeId, entityId);
     }
 });
