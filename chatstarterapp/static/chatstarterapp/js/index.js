@@ -357,7 +357,6 @@ BX24.init(async function(){
         await handleChatFromContact(entityId);
     } else if (entityType === 'smart') {
         console.log('Entity type1 = ', entityType)
-
         await handleChatFromSmart(entityTypeId, entityId);
     }
 });
